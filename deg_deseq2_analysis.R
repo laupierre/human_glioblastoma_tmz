@@ -21,8 +21,11 @@ samples$sample <- colnames (counts)
 row.names (samples) <- colnames (counts)
 
 
-# U87
-samples.s <- samples[samples$cell == "U87", ]
+# U87 cells
+cell_type <- "U87"
+# cell_type <- "GBM1"
+
+samples.s <- samples[samples$cell == cell_type, ]
 samples.s
 
 counts.s <- counts[ ,colnames (counts) %in% samples.s$sample]
@@ -52,6 +55,7 @@ boxplot (res$log2FoldChange)
 abline (h=0)
 
 write.table (res, "TMZ_U87_differential_expression.txt", row.names=F, quote=F, sep="\t")
+# write.table (res, "TMZ_GBM1_differential_expression.txt", row.names=F, quote=F, sep="\t")
 
 
 # PCA plot
