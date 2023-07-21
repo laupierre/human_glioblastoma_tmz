@@ -75,4 +75,29 @@ ggsave ("PCA plot.pdf", p1)
 
 
 
+## PCA of all samples
+
+dds <- DESeqDataSetFromMatrix(countData = round (counts), colData = samples, design = ~ condition)
+                                 
+keep <- rowSums(counts(dds) >= 10) >= dim (counts)[2]/2
+dds <- dds[keep,]
+dds
+
+vsd <- vst(dds, blind=FALSE)
+
+pcaData <- plotPCA(vsd, intgroup=c("condition"), returnData=TRUE)
+pcaData$cell <- gsub ("_.*", "", gsub ("TMZ_", "", pcaData$name))
+
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+
+p1 <- ggplot(pcaData, aes(PC1, PC2, color=cell, shape=condition)) +
+  		geom_point(size=3) +
+  		xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  		ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+		coord_fixed () # + geom_label_repel (aes(label = cell), max.overlaps = Inf)
+p1
+ggsave ("PCA plot.pdf", p1)
+
+
+
 
