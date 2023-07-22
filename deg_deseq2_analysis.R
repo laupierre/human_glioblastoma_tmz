@@ -96,7 +96,7 @@ p1 <- ggplot(pcaData, aes(PC1, PC2, color=cell, shape=condition)) +
   		ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
 		coord_fixed () # + geom_label_repel (aes(label = cell), max.overlaps = Inf)
 p1
-ggsave ("PCA plot.pdf", p1)
+ggsave ("PCA all cells plot.pdf", p1)
 
 
 
